@@ -3,6 +3,17 @@ let userData;
 $(document).ready(async function () {
   // $('#dataTable').DataTable();
   let students = await getUserData();
+  $("#exportExcel").click(function () {
+    $('<table>')
+      .append(
+        $("#dataTable").DataTable().$('tr').clone()
+      )
+      .table2excel({
+        exclude: ".excludeThisClass",
+        name: "Worksheet Name",
+        filename: "studentList" //do not include extension
+      });
+  });
   userData = students.data;
   renderStudents(students.data);
 });
@@ -110,4 +121,6 @@ function deleteConfirmed() {
 
   });
 }
+
+
 
